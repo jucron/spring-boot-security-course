@@ -34,7 +34,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests() // Allows restricting access based upon the HttpServletRequest
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll() //Allows configuring the HttpSecurity to only be invoked when matching the provided ant pattern.
-                .antMatchers("/api/**").hasRole(STUDENT.name())
+                .antMatchers("/api/**").hasRole(STUDENT.name()) // Only Student role have permission to this path
                 .anyRequest()
                 .authenticated()
                 .and()
