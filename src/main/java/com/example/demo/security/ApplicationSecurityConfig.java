@@ -20,7 +20,7 @@ import static com.example.demo.security.ApplicationUserRole.*;
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
-
+// WebSecurityConfigurerAdapter = a convenient base class for creating a WebSecurityConfigurer instance.
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -30,9 +30,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //HttpSecurity: web based security for specific http requests. By default it will be applied to all requests
         http
-                .authorizeRequests()
-                .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
+                .authorizeRequests() // Allows restricting access based upon the HttpServletRequest
+                .antMatchers("/", "index", "/css/*", "/js/*").permitAll() //Allows configuring the HttpSecurity to only be invoked when matching the provided ant pattern.
                 .antMatchers("/api/**").hasRole(STUDENT.name())
                 .anyRequest()
                 .authenticated()
@@ -41,7 +42,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    @Bean
+    @Bean //This class defines how you retrieve your Users from DataBase
     protected UserDetailsService userDetailsService() {
         UserDetails annaSmithUser = User.builder()
                 .username("annasmith")
