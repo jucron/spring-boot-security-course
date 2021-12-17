@@ -25,6 +25,8 @@ public enum ApplicationUserRole {
     }
 
     public Set<SimpleGrantedAuthority> getGrantedAuthorities() {
+        //This method is created to encapsulate the ENUMS in a SimpleGrantedAuthority format
+        // and returns to the authorities() method
         Set<SimpleGrantedAuthority> permissions = getPermissions().stream()
                 .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
                 .collect(Collectors.toSet());
