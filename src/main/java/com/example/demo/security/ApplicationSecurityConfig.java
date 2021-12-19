@@ -36,9 +36,10 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable() // TODO: I will teach this in detail in the next section
                 .authorizeRequests()
                 .antMatchers("/", "index", "/css/*", "/js/*").permitAll()
-                .antMatchers("/api/**").hasRole(STUDENT.name())
                 //Restricting authorization/permissions for different Roles:
                 // You can configure them at the CONTROLLER with @PreAuthorize
+//                .antMatchers("/api/**").hasRole(STUDENT.name())
+                //Allowing specific permissions, to each endpoint requests type
 //                .antMatchers(HttpMethod.DELETE, "/management/api/**").hasAuthority(COURSE_WRITE.getPermission())
 //                .antMatchers(HttpMethod.POST, "/management/api/**").hasAuthority(COURSE_WRITE.getPermission())
 //                .antMatchers(HttpMethod.PUT, "/management/api/**").hasAuthority(COURSE_WRITE.getPermission())
@@ -57,7 +58,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .username("annasmith")
                 .password(passwordEncoder.encode("password"))
 //                .roles(STUDENT.name()) // ROLE_STUDENT
-                .authorities(STUDENT.getGrantedAuthorities())
+                .authorities(STUDENT.getGrantedAuthorities()) //Assigning a set of SimpleGrantedAuthorities
                 .build();
 
         UserDetails lindaUser = User.builder()

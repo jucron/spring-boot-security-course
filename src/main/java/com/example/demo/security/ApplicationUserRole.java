@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import static com.example.demo.security.ApplicationUserPermission.*;
 
 public enum ApplicationUserRole {
+    // RoleENUM must construct a Set of Permissions (from permissionsENUM):
     STUDENT(Sets.newHashSet()),
     ADMIN(Sets.newHashSet(COURSE_READ, COURSE_WRITE, STUDENT_READ, STUDENT_WRITE)),
     ADMINTRAINEE(Sets.newHashSet(COURSE_READ, STUDENT_READ));
@@ -25,7 +26,7 @@ public enum ApplicationUserRole {
     }
 
     public Set<SimpleGrantedAuthority> getGrantedAuthorities() {
-        //This method is created to encapsulate the ENUMS in a SimpleGrantedAuthority format
+        //This method is created to encapsulate the Roles in a SimpleGrantedAuthority format
         // and returns to the authorities() method
         Set<SimpleGrantedAuthority> permissions = getPermissions().stream()
                 .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
