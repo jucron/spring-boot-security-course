@@ -32,6 +32,8 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                //CSRF is recommended only for requests that could be processed by a browser by normal users.
+                //No need to enable CSRF in servers used by non-browser clients.
                 .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .and()
                 .authorizeRequests()
