@@ -49,17 +49,18 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                     .loginPage("/login")
                     .permitAll()
-                    .defaultSuccessUrl("/courses", true)
-                    .passwordParameter("password")
-                    .usernameParameter("username")
+                    .defaultSuccessUrl("/courses", true) //afterLogin goes to this page
+                    .passwordParameter("password") //this is taken from form with name 'password'
+                    .usernameParameter("username") //this is taken from form with name 'username'
                 .and()
-                .rememberMe()
-                    .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21))
-                    .key("somethingverysecured")
+                .rememberMe()//Default of remember-me is 2 weeks
+                    .tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21))// customizing time to expiration
+                    .key("somethingverysecured")// Key used to hash the remember-cookie content
                     .rememberMeParameter("remember-me")
                 .and()
                 .logout()
                     .logoutUrl("/logout")
+                    //This next line is only needed because CSRF is disabled. For change-state operations, we must use POST
                     .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET")) // https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/apidocs/org/springframework/security/config/annotation/web/configurers/LogoutConfigurer.html
                     .clearAuthentication(true)
                     .invalidateHttpSession(true)
